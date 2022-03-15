@@ -2,7 +2,7 @@ import datetime
 import io
 import json
 from pprint import pprint
-from typing import List, Dict, Union, Any
+from typing import List, Dict, Union, Any, Optional
 
 import pycurl
 
@@ -95,11 +95,14 @@ class NalogAPI:
         return obj_result
 
     def create_receipt(self, name: str, price: int, download=False,
-                       date=datetime.datetime.now(), contact_phone: str = None,
+                       date: Optional[datetime] = None, contact_phone: str = None,
                        display_name: str = None, inn: str = None,
                        income_type='FROM_INDIVIDUAL', payment_type='CASH',
                        ignore_max_total_income_restriction=False) -> str:
         user = self.user
+
+        if not date:
+            date = datetime.datetime.now()
 
         params = json.dumps(
             {
