@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import io
 import json
 from pprint import pprint
@@ -102,7 +102,7 @@ class NalogAPI:
         user = self.user
 
         if not date:
-            date = datetime.datetime.now()
+            date = datetime.now()
 
         params = json.dumps(
             {
