@@ -2,7 +2,7 @@ from io import open
 from setuptools import setup
 
 
-version = '0.0.1'
+version = '0.0.3'
 name = 'nalog'
 
 
