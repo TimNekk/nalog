@@ -2,12 +2,15 @@ from io import open
 from setuptools import setup
 
 
-version = '0.0.4'
+version = '0.0.5'
 name = 'nalog'
 
 
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
+
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
 
 setup(
     name=name,
@@ -28,7 +31,7 @@ setup(
     license='Apache License, Version 2.0, see LICENSE file',
 
     packages=[name],
-    install_requires=['pycurl==7.43.0.5'],
+    install_requires=required,
 
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
