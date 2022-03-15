@@ -9,9 +9,6 @@ name = 'nalog'
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
-
 setup(
     name=name,
     version=version,
@@ -31,7 +28,7 @@ setup(
     license='Apache License, Version 2.0, see LICENSE file',
 
     packages=[name],
-    install_requires=required,
+    install_requires=['pycurl==7.43.0.5'],
 
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
