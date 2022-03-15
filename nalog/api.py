@@ -173,9 +173,9 @@ class NalogAPI:
         else:
             raise ResponseError('Can\'t get response from FNS (download check)')
 
-    def get_history(self, from_datetime=datetime.datetime.fromtimestamp(100000),
-                    to_datetime=datetime.datetime.now(),
-                    desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime.datetime, float, Dict[str, Any]]]]:
+    def get_history(self, from_datetime=datetime.fromtimestamp(100000),
+                    to_datetime=datetime.now(),
+                    desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime, float, Dict[str, Any]]]]:
         user = self.user
 
         url = f'https://lknpd.nalog.ru/api/v1/incomes/csv?from={from_datetime.astimezone().replace(microsecond=0).isoformat().replace("+", "%2B")}' \
@@ -211,7 +211,7 @@ class NalogAPI:
 
             operation = {
                 'id': item[0],
-                'date': datetime.datetime.strptime(item[1], '%d.%m.%Y'),
+                'date': datetime.strptime(item[1], '%d.%m.%Y'),
                 'name': item[2].replace('\"', ''),
                 'price': float(item[3].replace(',', '.')),
                 'tax': float(item[4].replace(',', '.')),
@@ -227,40 +227,40 @@ class NalogAPI:
 
         return operations
 
-    def get_today_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime.datetime, float, Dict[str, Any]]]]:
-        return self.get_history(from_datetime=datetime.datetime.combine(datetime.datetime.now().date(), datetime.time(0, 0)),
+    def get_today_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime, float, Dict[str, Any]]]]:
+        return self.get_history(from_datetime=datetime.combine(datetime.now().date(), datetime.time(0, 0)),
                                 desc=desc, hide_cancelled=hide_cancelled)
 
-    def get_week_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime.datetime, float, Dict[str, Any]]]]:
-        return self.get_history(from_datetime=datetime.datetime.combine((datetime.datetime.now() - datetime.timedelta(days=datetime.datetime.now().weekday())).date(), datetime.time(0, 0)),
+    def get_week_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime, float, Dict[str, Any]]]]:
+        return self.get_history(from_datetime=datetime.combine((datetime.now() - datetime.timedelta(days=datetime.now().weekday())).date(), datetime.time(0, 0)),
                                 desc=desc, hide_cancelled=hide_cancelled)
 
-    def get_month_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime.datetime, float, Dict[str, Any]]]]:
-        return self.get_history(from_datetime=datetime.datetime.combine((datetime.datetime.now() - datetime.timedelta(days=datetime.datetime.now().day - 1)).date(), datetime.time(0, 0)),
+    def get_month_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime, float, Dict[str, Any]]]]:
+        return self.get_history(from_datetime=datetime.combine((datetime.now() - datetime.timedelta(days=datetime.now().day - 1)).date(), datetime.time(0, 0)),
                                 desc=desc, hide_cancelled=hide_cancelled)
 
-    def get_previous_day_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime.datetime, float, Dict[str, Any]]]]:
-        return self.get_history(from_datetime=datetime.datetime.combine((datetime.datetime.now() - datetime.timedelta(days=1)).date(), datetime.time(0, 0)),
-                                to_datetime=datetime.datetime.combine(datetime.datetime.now().date(), datetime.time(0, 0)),
+    def get_previous_day_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime, float, Dict[str, Any]]]]:
+        return self.get_history(from_datetime=datetime.combine((datetime.now() - datetime.timedelta(days=1)).date(), datetime.time(0, 0)),
+                                to_datetime=datetime.combine(datetime.now().date(), datetime.time(0, 0)),
                                 desc=desc, hide_cancelled=hide_cancelled)
 
-    def get_previous_week_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime.datetime, float, Dict[str, Any]]]]:
-        return self.get_history(from_datetime=datetime.datetime.combine((datetime.datetime.now() - datetime.timedelta(days=datetime.datetime.now().weekday() + 7)).date(), datetime.time(0, 0)),
-                                to_datetime=datetime.datetime.combine((datetime.datetime.now() - datetime.timedelta(days=datetime.datetime.now().weekday())).date(), datetime.time(0, 0)),
+    def get_previous_week_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime, float, Dict[str, Any]]]]:
+        return self.get_history(from_datetime=datetime.combine((datetime.now() - datetime.timedelta(days=datetime.now().weekday() + 7)).date(), datetime.time(0, 0)),
+                                to_datetime=datetime.combine((datetime.now() - datetime.timedelta(days=datetime.now().weekday())).date(), datetime.time(0, 0)),
                                 desc=desc, hide_cancelled=hide_cancelled)
 
-    def get_previous_month_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime.datetime, float, Dict[str, Any]]]]:
-        previous_month_days = (datetime.date(datetime.datetime.now().year, datetime.datetime.now().month, 1) - datetime.date(datetime.datetime.now().year, datetime.datetime.now().month-1, 1)).days
-        return self.get_history(from_datetime=datetime.datetime.combine((datetime.datetime.now() - datetime.timedelta(days=datetime.datetime.now().day - 1 + previous_month_days)).date(), datetime.time(0, 0)),
-                                to_datetime=datetime.datetime.combine((datetime.datetime.now() - datetime.timedelta(days=datetime.datetime.now().day - 1)).date(), datetime.time(0, 0)),
+    def get_previous_month_history(self, desc=True, hide_cancelled=False) -> List[Dict[str, Union[datetime, float, Dict[str, Any]]]]:
+        previous_month_days = (datetime.date(datetime.now().year, datetime.now().month, 1) - datetime.date(datetime.now().year, datetime.now().month-1, 1)).days
+        return self.get_history(from_datetime=datetime.combine((datetime.now() - datetime.timedelta(days=datetime.now().day - 1 + previous_month_days)).date(), datetime.time(0, 0)),
+                                to_datetime=datetime.combine((datetime.now() - datetime.timedelta(days=datetime.now().day - 1)).date(), datetime.time(0, 0)),
                                 desc=desc, hide_cancelled=hide_cancelled)
 
     @staticmethod
-    def get_profit(history: List[Dict[str, Union[datetime.datetime, float, Dict[str, Any]]]]):
+    def get_profit(history: List[Dict[str, Union[datetime, float, Dict[str, Any]]]]):
         return sum(map(lambda operation: operation['price'] if operation['status'] == 'Зарегистрирован' else 0, history))
 
     def cancel(self, receipt_id: str, comment='Чек сформирован ошибочно',
-               date=datetime.datetime.now(), partner_code=None):
+               date=datetime.now(), partner_code=None):
         user = self.user
 
         params = json.dumps(
