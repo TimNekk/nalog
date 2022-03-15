@@ -2,7 +2,7 @@
 
 ![PyPI](https://img.shields.io/pypi/v/nalog?color=orange) ![Python 3.6, 3.4, 3.8](https://img.shields.io/pypi/pyversions/nalog?color=blueviolet)
 
-**club_house_api** - this module is a Python client library for Moy Nalog API
+**nalog** - this module is a Python client library for Moy Nalog API
 
 ## Installation
 
@@ -14,7 +14,10 @@ pip install nalog
 
 ## Usage
 
-You can generate a token for clubhouse by going to the account section and generating a new token
+You need next data from [lkfl2.nalog.ru](https://lkfl2.nalog.ru/lkfl/login) to autharize:
+- Email
+- INN (Taxpayer Identification Number)
+- Password
 
 ```python
 from nalog import NalogAPI
