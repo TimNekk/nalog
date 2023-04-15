@@ -1,3 +1,7 @@
+<div align="center">
+<img src="https://socialify.git.ci/TimNekk/nalog/image?description=1&forks=1&issues=1&language=1&logo=https%3A%2F%2Fstatic.tildacdn.com%2Ftild3538-3137-4233-b035-306537633465%2F_.png&owner=1&pulls=1&stargazers=1" alt="nalog" width="640" height="320" />
+</div>
+
 # Moy Nalog API
 
 ![PyPI](https://img.shields.io/pypi/v/nalog?color=orange) ![Python 3.6, 3.4, 3.8](https://img.shields.io/pypi/pyversions/nalog?color=blueviolet)
